@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@/lib/*":    ["./lib/*"],
       "@/web/*":    ["./web/*"],
       "@/config/*": ["./web/config/*"],
       "@/weblib/*": ["./web/lib/*"],
       "@/site/*":   ["./web/site/*"],
-      "@/svg/*":    ["./web/svg/*"],
+      "@/svg/*":    ["./web/svg/*"]
     },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
@@ -15,7 +16,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
@@ -23,7 +23,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

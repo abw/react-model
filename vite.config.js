@@ -5,7 +5,6 @@ import tsconfigPaths    from 'vite-tsconfig-paths'
 import dts              from 'vite-plugin-dts'
 import { defineConfig } from 'vite'
 
-
 export default defineConfig(
   ({ command }) => ({
     plugins: [
