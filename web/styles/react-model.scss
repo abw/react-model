@@ -1,0 +1,11 @@
+// $brand-color: 'blue' !default;
+// $brand-hue:   193 !default;
+$brand-color: 'blue' !default;
+$brand-hue:   193 !default;
+
+@import "@abw/badger-website/styles/badger-website.scss";
+@import "modules/all.scss";
+
+div.hero {
+  grid-template-columns: 1fr 5fr;
+}

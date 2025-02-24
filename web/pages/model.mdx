@@ -1,0 +1,261 @@
+import C1App         from '@/web/lib/Model/Counter1/App.tsx'
+import C1AppSrc      from '@/web/lib/Model/Counter1/App.tsx?raw'
+import C1CounterSrc  from '@/web/lib/Model/Counter1/Counter.ts?raw'
+import C1CountSrc    from '@/web/lib/Model/Counter1/Count.tsx?raw'
+import C1ControlsSrc from '@/web/lib/Model/Counter1/Controls.tsx?raw'
+import C2App         from '@/web/lib/Model/Counter2/App.tsx'
+import C2AppSrc      from '@/web/lib/Model/Counter2/App.tsx?raw'
+import C2TypesSrc    from '@/web/lib/Model/Counter2/types.ts?raw'
+import C2CounterSrc  from '@/web/lib/Model/Counter2/Counter.ts?raw'
+import C2CountSrc    from '@/web/lib/Model/Counter2/Count.tsx?raw'
+import C2ControlsSrc from '@/web/lib/Model/Counter2/Controls.tsx?raw'
+import C3App         from '@/web/lib/Model/Counter3/App.tsx'
+import C3AppSrc      from '@/web/lib/Model/Counter3/App.tsx?raw'
+import C3CounterSrc  from '@/web/lib/Model/Counter3/Counter.ts?raw'
+import { BadgerCSSLink } from '@/site/Links.jsx'
+import { Example, Source, SubHeading } from '@abw/badger-website'
+
+# Model
+
+## TODO
+
+Old markup follows
+
+## Counter App #1
+
+Here's a simple counter app.  Click on the buttons to decrement or increment
+the count.
+
+<Example
+  Component={C1App}
+  code={C1AppSrc}
+  caption="CounterApp.tsx"
+  highlightLines="6,9"
+  expand
+/>
+
+Note that the code is wrapped in a `Provider` that we import from `Model`.
+
+### Model
+
+This is our `Counter` component which defines the data model for our
+application.
+
+<Source
+  code={C1CounterSrc}
+  caption="Model.ts"
+  highlightLines="5,11-13,16"
+  expand
+/>
+
+It defines a `Counter` component which takes a single optional `initialCount`
+property, used to set the initial value of a `count` state variable.  We
+define two additional functions, `inc` and `dec`, to increment and decrement
+the count respectively.
+
+The component returns an object containing the properties that it wants to
+make available to consumers via a context.  Here it's the `count` state
+variable, the `setCount` function to update it, and our `inc` and `dec`
+functions.
+
+The important part is on the final line.  We call the `Model` function passing
+the `Counter` component as an argument.  This returns an object containing a
+`Provider` and `Consumer` that we export as named variables.
+
+The `Provider` is what we used to wrap our application code in the
+`CounterApp.tsx` component shown above.  The `Provider` forwards the
+`initialCount` property to our model.
+
+Now let's see how the `Consumer` works.
+
+### Consumer
+
+This is our `Count` component used to display the current value of `count`.
+
+<Source
+  code={C1CountSrc}
+  highlightLines="3"
+  caption="Count.tsx"
+  expand
+/>
+
+The component is wrapped in a call to the `Consumer` function that we import
+from `Counter`.  It will be forwarded all the properties that the model
+exposes (`count`, `setCount`, `inc` and `dec`) although in this case we're
+only using `count`.
+
+The `Controls` component renders buttons that call the `inc` and `dec`
+functions to change the count.
+
+<Source
+  code={C1ControlsSrc}
+  highlightLines="3-5,7"
+  caption="Controls.tsx"
+  expand
+/>
+
+The difference here is that the `Controls` component accepts an additional
+optional property, `color`.  This is added as a CSS class to the container
+`div`.  It's a utility class provided by <BadgerCSSLink/> which effectively
+changes the colour of the buttons contained inside it.  It also provides the
+other utility classes we're using here (`flex`, `gap-2` and `mar-t-2`).
+
+On lines 3-5 we define `ControlsProps` as a type for the additional property
+(or properties) that the component accepts. We then add it as a generic type
+parameter in the call to `Consumer` on line 7.
+
+The component then accepts the `inc` and `dec` properties provided by the
+model, along with  the additional `color` property to set the color of the
+buttons.
+
+## Counter App #2
+
+Here's a slightly more advanced version of the above.
+
+<Example
+  Component={C2App}
+  code={C2AppSrc}
+  caption="CounterApp2.tsx"
+  highlightLines="6-10,12,18,22-23"
+  expand
+/>
+
+The significant change here is the `CounterApp` now accepts a number of
+properties (lines 6 to 9).  The `controlsColor` is forwarded onto the
+`Controls` component as the `color` property on line 12.  All the remaining
+properties are passed to the `Provider` on line 10.
+
+We now render the `CounterApp` twice in the `TwoCounterApps` component,
+demonstrating how we can define different `initialCount` and `controlsColor`
+properties for each (lines 18 and 22 to 23).
+
+### Types
+
+Here are the types that we've defined to make this work.
+
+<Source
+  code={C2TypesSrc}
+  caption="types.ts"
+  expand
+/>
+
+The `ProviderProps` defines the `initialCount` property that the `Provider`
+can accept on behalf of the `Counter` model.
+
+The `AppProps` extends the `ProviderProps` to add an optional `controlsColor`
+property as a string.
+
+Finally the `ConsumerProps` type defines the properties that are returned from
+the `Counter` model component and available for consumers to access.
+
+The `SetState<T>` utility type, imported on line 1 and used on line 13, is
+a more readable alias for the somewhat cryptic
+`React.Dispatch<React.SetStateAction<T>>` type.
+
+<SubHeading code="Model" id="model-v2"/>
+
+The `Counter` model component is much the same as before with just a couple
+of  changes.
+
+<Source
+  code={C2CounterSrc}
+  caption="Model.ts"
+  highlightLines="20,21"
+  expand
+/>
+
+In addition to exporting the `Provider` and `Consumer` as before, we're now
+also exporting the `Use` hook returned by the call to `Model`. In keeping with
+React best practice, we alias this as `useCounter`.
+
+We also specify the `ProviderProps` and `ConsumerProps` as generic type
+parameters on the `Model`.  This allows Typescript to check that the
+properties the `Counter` receives and the data that it returns both conform to
+those types.
+
+<SubHeading code="Consumer" id="consumer-v2"/>
+
+We've change the `Count` component a little, just to demonstrate a different
+way of doing things.
+
+<Source
+  code={C2CountSrc}
+  highlightLines="4,7"
+  caption="Count.tsx"
+  expand
+/>
+
+Instead of defining the component body inside a call to `Consumer`, we define
+it as the `MyCount` component on line 4.  Then we wrap it in a call to `Consumer`
+on line 7 and define that to be the `Count` component that is exported.
+
+If your component is defined inside the call to `Consumer`, as it was in the
+previous example, then Typescript can automatically infer the property types.
+However, it can't when it's defined up front like this so you need to
+explicitly type them yourself.
+
+We can use the `ConsumerProps` type that we've already defined to this effect.
+In this example the component doesn't accept *all* of the model properties,
+just *some* of them.  Or to be precise, just *one* of them: `count`.  The
+`Partial` utility type tells Typescript that less is more and not to worry
+if we're not using them all of the properties defined in `ConsumerProps`.
+
+### Use
+
+The `Controls` component shows the other way to access context data, using
+the `useCounter` hook that we defined and exported from the `Counter` model
+component.
+
+<Source
+  code={C2ControlsSrc}
+  highlightLines="10"
+  caption="Controls.tsx"
+  expand
+/>
+
+As before, the `Controls` component accepts an optional `color` string as a
+property.  We define the `ControlsProps` type and use that to type the
+component's properties.
+
+Then inside the component we call `useCounter()` to access any of the
+properties that the model returns.  In this case, it's the `inc` and `dec`
+functions.
+
+## Counter App #3
+
+Here's one more variation of our counter app.
+
+<SubHeading code="Model" id="model-v3"/>
+
+The only difference to the `Counter` model is to export the `Children`
+returned from the `Model` function as a named export.
+
+<Source
+  code={C3CounterSrc}
+  caption="Model.ts"
+  highlightLines="19"
+  expand
+/>
+
+### Children
+
+We can now use the `Children` component to embed functions (and
+other content) directly into the code.  If an immediate child of the
+`Children` component is a function then it will receive
+the context properties returned by the `Counter` model component.
+
+<Example
+  Component={C3App}
+  code={C3AppSrc}
+  caption="CounterApp.tsx"
+  highlightLines="5,24"
+  expand
+/>
+
+This offers a quick-and-dirty solution which avoids the need to define a
+separate component that is wrapped via the `Consumer` function or calls the
+`useCounter` hook.
+
+Note that this only works when a function is an immediate child of the
+`Children` component.
+

@@ -1,0 +1,103 @@
+import App from '@/web/lib/Volume/App'
+import AppSrc from '@/web/lib/Volume/App.tsx?raw'
+import VolumeSrc from '@/web/lib/Volume/Volume.ts?raw'
+import ButtonsSrc from '@/web/lib/Volume/Buttons.tsx?raw'
+import DisplaySrc from '@/web/lib/Volume/Display.tsx?raw'
+import SliderSrc  from '@/web/lib/Volume/Slider.tsx?raw'
+import { Example, Source } from '@abw/badger-website'
+import { BadgerCSSLink } from '@/site/Links.jsx'
+
+# Volume Control
+
+This example is much the same as the amplifier demo on the home page, but
+we'll go into it in a little more detail.  Click on the buttons or drag
+the slide to change the volume.
+<App/>
+
+## Model
+
+This is the component that defines the model for this demo.
+
+<Source
+  code={VolumeSrc}
+  caption="Volume.ts"
+  expand
+/>
+
+The `volume` (and corresponding `setVolume` function) are defined using
+`useState()` with the initial value set from the optional `initialVolume`
+property.
+
+We define some additional functions of convenience, `oneLouder` and
+`oneQuieter` to increment and decrement the volume respectively, and
+`goToEleven` for when you want that push over the cliff.
+
+The return value from the function is an object containing all the items
+that we want to share with model consumers.
+
+The final step is to pass this `Volume` function to the `Model` higher order
+component imported from `@abw/react-model`.  This returns an object containing
+a `Provider`, a `Consumer` and a `Use` hook which we alias as `useVolume`.
+These are the named exports from the module.
+
+## Provider
+
+The `Provider` is imported from `Volume.ts` and used to define a scope for
+this model.
+
+Along with some general layout and styling (provided by CSS classes
+from <BadgerCSSLink/>) it contains three further components: `Slider`,
+`Buttons` and `Display`.  All these component will be able to access the
+data model from the Provider.
+
+In this example, we're setting the `initialVolume` to `10`.  The properties
+set on the `Provider` are forwarded to the `Volume` model function.
+
+<Source
+  code={AppSrc}
+  caption="App.tsx"
+  expand
+  highlightLines="7,15"
+/>
+
+## Consumer
+
+There are two ways for components to access the model.  The first is to wrap
+a component using the `Consumer` higher order component.  The component will
+be passed all the model items as properties.  The `Slider` component renders
+a range slide input.  It uses the `volume` and `maxVolume` values and the
+`setVolume` function to update the volume when the slide is dragged.
+
+<Source
+  code={SliderSrc}
+  caption="Slider.tsx"
+  highlightLines="3,4,12"
+  expand
+/>
+
+The `Buttons` component renders three buttons which, when clicked, call the
+functions to decrease, increase, or turn the volume all the way up to eleven.
+Now how we also use the `volume` and `maxVolume` values to disable the
+corresponding buttons when the volume is already at the lowest or highest
+value.
+
+<Source
+  code={ButtonsSrc}
+  caption="Buttons.tsx"
+  highlightLines="6,9,12"
+  expand
+/>
+
+## Use
+
+The second way is to access model data is to call the `useVolume` hook from
+within a component.  In the `Display` component we only need the `volume` and
+`maxVolume` items to display.
+
+<Source
+  code={DisplaySrc}
+  caption="Display.tsx"
+  highlightLines="4"
+  expand
+/>
+

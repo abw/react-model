@@ -1,0 +1,107 @@
+import Logo from '@/svg/react-context.svg?react'
+import App from '@/web/lib/Amplifier/App'
+import AppSrc from '@/web/lib/Amplifier/App.tsx?raw'
+import ModelSrc from '@/web/lib/Amplifier/Amplifier.ts?raw'
+import ControlsSrc from '@/web/lib/Amplifier/Controls.tsx?raw'
+import VolumeSrc from '@/web/lib/Amplifier/Volume.tsx?raw'
+import { Link, Hero, PeopleWhoShare, Source } from '@abw/badger-website'
+import { Tabset } from '@abw/badger-react-ui'
+
+<Hero
+  logo={<Logo className="rc-logo"/>}
+  title="React Model"
+  tagline="Built by Badgers"
+  overview="React context models made easy"
+  underview={
+    <>
+      A small and simple library for defining an application data model using
+      a React context.
+    </>
+  }
+/>
+
+<div className="intro mar-t-8">
+  This library introduces the MPCU (Model, Provider, Consumer, Use hook)
+  pattern which provides a simple way to define and use an application data
+  model using a React context.
+</div>
+
+## Demo
+
+Here's a variation of the usual "counter demo".  We have an amplifier with a
+volume setting.  Click the buttons to make it louder or quieter.
+
+<App/>
+
+Here's the source code for the demo.  The `Model` defines the application
+data model. The `Provider` is used to initialise it and defines the scope
+in which it applies.  Inside that scope the `Consumer` can be used to wrap
+components to get the model data as properties.  Or the `Use` hook (named
+`useAmplifier` in this example) can be called from inside any component to
+access the same model data.
+
+<Tabset
+  className="mar-t-2"
+  tabs={[
+    {
+      text: 'Model',
+      content:
+        <Source
+          code={ModelSrc}
+          caption="Amplifier.ts"
+          highlightLines="9-11,17-21"
+          expand
+        />
+    },
+    {
+      text: 'Provider',
+      content:
+        <Source
+          code={AppSrc}
+          caption="App.tsx"
+          highlightLines="10,13"
+          expand
+        />
+    },
+    {
+      text: 'Consumer',
+      content:
+        <Source
+          code={VolumeSrc}
+          caption="Volume.tsx"
+          highlightLines="5,8"
+          expand
+        />
+    },
+    {
+      text: 'Use Hook',
+      content:
+        <Source
+          code={ControlsSrc}
+          caption="Controls.tsx"
+          highlightLines="6"
+          expand
+        />
+    }
+  ]}
+/>
+
+## Getting Started
+
+<div className="grid-1 gap-4">
+  <div className="link">
+    The <Link to="/installation">Installation</Link> page shows how to add it
+    to your React project.
+  </div>
+
+  <div className="link">
+    The <Link to="/volume">Volume Control</Link> goes through a variation of
+    the demo above in more detail.
+  </div>
+
+  <div className="link">
+    The <Link to="/products">Products and Basket</Link> page is a more complex
+    example showing a more realistic use case.
+  </div>
+</div>
+

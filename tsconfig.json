@@ -2,6 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/lib/*":    ["./lib/*"],
+      "@/web/*":    ["./web/*"],
       "@/config/*": ["./web/config/*"],
       "@/weblib/*": ["./web/lib/*"],
       "@/site/*":   ["./web/site/*"],

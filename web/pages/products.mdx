@@ -1,0 +1,171 @@
+import App         from '@/web/lib/Products/App.tsx'
+import AppSrc      from '@/web/lib/Products/App.tsx?raw'
+import ModelSrc    from '@/web/lib/Products/Model.ts?raw'
+import LayoutSrc   from '@/web/lib/Products/Layout.tsx?raw'
+import ListSrc     from '@/web/lib/Products/List.tsx?raw'
+import InfoSrc     from '@/web/lib/Products/Info.tsx?raw'
+import BasketSrc   from '@/web/lib/Products/Basket.tsx?raw'
+import InBasketSrc   from '@/web/lib/Products/InBasket.tsx?raw'
+import NotInBasketSrc   from '@/web/lib/Products/NotInBasket.tsx?raw'
+import { BadgerCSSLink } from '@/site/Links.jsx'
+import { Example, Source, SubHeading } from '@abw/badger-website'
+
+# Products and Basket
+
+Here's a more detailed example emulating an e-commerce app with a list of
+products that can be added to a basket.
+
+<Example
+  Component={App}
+  code={AppSrc}
+  caption="Products.tsx"
+  expand
+/>
+
+## Model
+
+The model is a bit more complicated than the previous examples.
+
+We maintain a list of products (`products` and `setProducts`) and an index
+(`productIndex` and `setProductIndex`) to fetch a product by id.  The
+`loadProducts` function emulates a call to an API endpoint to load the
+list of products.  To keep things simple in this example, we just copy them
+from the `sampleProducts` defined in lines 18 to 22.
+
+There's a `selectProduct` function which selects a product from the index and
+stores in the `product` state variable, using `setProduct`.
+
+Then there's the `basket` and associated `setBasket` function, along with
+functions to add a product to the basket (`addProductToBasket`), return the
+quantity of any product in the basket (`quantityInBasket`), remove a product
+from the basket (`removeProductFromBasket`) and empty the basket entirely
+(`emptyBasket`).
+
+We also define a `ready` state variable along with its corresponding setter,
+`setReady`.  These would typically be used to prevent users from interacting
+with the application before it's properly initialised and/or to provided
+feedback to the user that something is happening in the background, e.g. by
+displaying a loading message or spinner.
+
+<Source
+  code={ModelSrc}
+  caption="Products.ts"
+  expand
+/>
+
+As before, the function only needs to return an object containing the data
+items that it wants to share with consumers.
+
+The `Products` function is passed to the `Model` higher order component which
+returns an object containing a `Provider`, `Consumer` and `Use` hook (which we
+alias to `useProducts`).  These are exported as named exports.
+
+## Layout Component
+
+Let's look at the `Layout` component that wraps the other component.
+
+<Source
+  code={LayoutSrc}
+  caption="Layout.tsx"
+  highlightLines="4-6,8"
+  expand
+/>
+
+This uses the `Consumer` to wrap the component so that it can access the
+`ready` state variable as a property.  But there's a twist.  This component
+also expects to receive a `children` property which isn't one of the data
+items provided by the model.
+
+To keep everything type safe, we define the `LayoutExtraProps` interface
+that includes the `children` property as a `ReactNode`.  This is then passed
+as a generic type parameter to the `Consumer` as `Consumer<LayoutExtraProps>`.
+This ensures that Typescript knows that the component can receive the `children`
+as well as any other data items provided by the model.
+
+The component uses the `ready` property to display a loading message until
+the model is ready to be interacted with.  At that point the `children` are
+rendered.
+
+## List Component
+
+The `Layout` component has two children: the `List` and `Info` components.
+Here's the first of those.
+
+<Source
+  code={ListSrc}
+  caption="List.tsx"
+  highlightLines="5-8"
+  expand
+/>
+
+It uses 4 items provided by the data model: the list of `products`, any
+currently selected `product`, the `selectProduct` function to select a product
+by id, and the `quantityInBasket` function to determine how many of any
+particular product (by id) are currently in the basket.
+
+It renders one button for each product, including the number in the basket.
+Clicking on a button selects the product.
+
+## Info Component
+
+The `Info` component displays information about any currently selected
+`product`.  If no product is selected it displays a message inviting the user
+to click on a product button to select it.
+
+<Source
+  code={InfoSrc}
+  caption="Info.tsx"
+  highlightLines="5"
+  expand
+/>
+
+## Basket Component
+
+The `Basket` component is rendered by the `Info` component when a product
+is selected.  To demonstrate the other way of accessing the data model, this
+component uses the `useProducts` hook.  It's functionality similar to wrapping
+a component with the `Consumer` in that exactly the same model data items are
+available.  The only difference is that the `Consumer` wrapper passes them as
+properties to the component and the `Use` hook returns them as an object.
+
+<Source
+  code={BasketSrc}
+  caption="Basket.tsx"
+  highlightLines="6-11"
+  expand
+/>
+
+It renders either of the `InBasket` or `NotInBasket` components, depending
+on the product being in the basket or not.  If there are items in the basket
+it renders an "Empty basket" button which will empty the basket when clicked.
+Otherwise it displays a "Basket is empty" message.
+
+## InBasket Component
+
+The `InBasket` component shows another variation.  This uses the `useProducts`
+hook to fetch the items from the data model.  It also accepts a `quantity`
+property, passed to it by the `Basket` component as a short-cut.  The
+`InBasketProps` interface is used to type its properties.
+
+<Source
+  code={InBasketSrc}
+  caption="InBasket.tsx"
+  highlightLines="3-5,7"
+  expand
+/>
+
+This displays a message saying how many of the product are currently in the
+basket.  An "Add one" button is provided to add another one to the basket.
+A "Remove" button removes the product from the basket.
+
+## NotInBasket Component
+
+If the product isn't already in the basket then the `NotInBasket` component is
+displayed.  This displays a message along with a button to add one to the
+basket.
+
+<Source
+  code={NotInBasketSrc}
+  caption="NotInBasket.tsx"
+  expand
+/>

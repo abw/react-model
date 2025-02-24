@@ -1,0 +1,29 @@
+.rc-logo {
+  // max-width: 30%;
+  max-height: 200px;
+  --color: var(--brand-60);
+  --outline: var(--brand-30);
+  --inline: var(--brand-90);
+  .outline {
+    fill:none;
+    // stroke: var(--outline);
+    stroke: var(--outline);
+  }
+  .inline {
+    fill:var(--inline);
+    // stroke: var(--outline);
+  }
+  .filled {
+    fill: var(--color);
+    stroke: var(--outline);
+  }
+  .atom {
+    fill: var(--outline);
+    // stroke: var(--outline);
+  }
+}
+#{$dark-theme} .rc-logo {
+  --color: var(--brand-40);
+  --outline: var(--brand-70);
+  --inline: var(--brand-10);
+}
