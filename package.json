@@ -1,0 +1,81 @@
+{
+  "name": "@abw/react-model",
+  "version": "1.0.0",
+  "description": "Utilities for working with React contexts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/react-model.umd.cjs",
+  "module": "./dist/react-model.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/react-model.umd.cjs",
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/react-model.js"
+      }
+    }
+  },
+  "author": "Andy Wardley",
+  "license": "ISC",
+  "keywords": [
+    "react",
+    "context"
+  ],
+  "scripts": {
+    "dev": "vite --config vite.docs.js",
+    "test": "vitest --ui",
+    "build": "$npm_execpath build:lib && $npm_execpath build:docs",
+    "build:lib": "tsc && vite build",
+    "build:docs": "vite build --config vite.docs.js",
+    "preview": "vite preview --config vite.docs.js",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abw/react-model.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abw/react-model/issues"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || 19.0.0",
+    "react-dom": "^18.2.0 || 19.0.0"
+  },
+  "devDependencies": {
+    "@abw/badger-react-ui": "^1.3.13",
+    "@abw/badger-timestamp": "^1.2.1",
+    "@abw/badger-utils": "^1.2.4",
+    "@abw/badger-website": "^0.3.3",
+    "@mdx-js/react": "^3.1.0",
+    "@mdx-js/rollup": "^3.1.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "^2.1.9",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "jsdom": "^24.1.3",
+    "react-router-dom": "^6.29.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "rehype-mdx-code-props": "^3.0.1",
+    "sass": "=1.78.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^5.4.14",
+    "vite-jsconfig-paths": "^2.0.1",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-svgr": "^4.3.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.9"
+  }
+}
