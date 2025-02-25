@@ -1,7 +1,7 @@
 {
   "name": "@abw/react-model",
   "version": "1.0.0",
-  "description": "Utilities for working with React contexts",
+  "description": "Simple application data model using React context",
   "type": "module",
   "files": [
     "dist"
@@ -22,7 +22,9 @@
   "license": "ISC",
   "keywords": [
     "react",
-    "context"
+    "context",
+    "state",
+    "model"
   ],
   "scripts": {
     "dev": "vite --config vite.docs.js",
