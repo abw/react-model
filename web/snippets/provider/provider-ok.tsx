@@ -1,0 +1,7 @@
+<Provider initialCount={10}>
+  // ...
+</Provider>
+
+<Provider initialCount={10} className="my-class">
+  // ...
+</Provider>

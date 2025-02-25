@@ -1,0 +1,33 @@
+import { Snippet } from '@abw/badger-website'
+
+# Use
+
+Wrapping a component in the `Consumer` higher order component is
+perfectly cromulent, but the preferred way to access context data these days
+tends to be via a use hook.
+
+Consider this model, much the same as the previous examples.
+
+<Snippet
+  file="use/model.ts"
+  expand
+/>
+
+The `Model` function returns a use hook as the `Use` property.  It's generally
+not advised to use it without giving it a name that matches the recommended
+practice for React hooks, that the name should start with `use`.
+
+In this example, we export it as `useCounter`.
+
+We can then import that hook and call it anywhere inside a component to access
+the model data.
+
+<Snippet
+  file="use/use.tsx"
+  expand
+/>
+
+## Typescript Notes
+
+If you're using Typescript then the properties returned by the use hook will
+all be properly typed.  What a time to be alive!

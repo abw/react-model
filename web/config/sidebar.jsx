@@ -20,7 +20,9 @@ const sidebar = {
         { to: '/model',          text: 'Model' },
         { to: '/provider',       text: 'Provider' },
         { to: '/consumer',       text: 'Consumer' },
+        { to: '/use',            text: 'Use' },
         { to: '/children',       text: 'Children' },
+        { to: '/utilities',      text: 'Utilities' },
       ]
     },
   ]

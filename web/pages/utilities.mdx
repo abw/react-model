@@ -1,0 +1,41 @@
+# Utilities
+
+## debugFunction()
+
+There's one simple function that I find to be invaluable when writing
+model code: a debugging function.
+
+The `debugFunction()` function is actually a factory for creating a debugging
+function.
+
+```ts
+  const debug = debugFunction({
+    debug: true,
+    debugPrefix: 'Example > ',
+    debugColor: 'orangered'
+  }),
+```
+
+Call the generated function to display a debugging message in the Javascript
+console.
+
+```ts
+debug('A message')
+debug('A message with data:', { number: 11, color: 'black' })
+```
+
+It accepts three properties.
+
+* `debug` - when this is `true` it returns a function that is a wrapper around
+`console.log` for displaying debugging message.  When it is `false` it returns
+a function that does nothing.
+
+* `debugPrefix` - when specified, this string will be used to prefix all your
+debugging messages.  This can be useful to help distinguish them from other
+debugging message.
+
+* `debugColor` - if the `debugPrefix` option is specified then this will be
+used to set the color of the prefix string. This is *especially* useful to help
+distinguish them from other debugging message.  It can be any valid CSS color,
+e.g. a color string ('orangered', 'rebeccapurple', etc), an RGB hex value,
+and so on.

@@ -4,6 +4,7 @@ import AppSrc from '@/web/lib/Amplifier/App.tsx?raw'
 import ModelSrc from '@/web/lib/Amplifier/Amplifier.ts?raw'
 import ControlsSrc from '@/web/lib/Amplifier/Controls.tsx?raw'
 import VolumeSrc from '@/web/lib/Amplifier/Volume.tsx?raw'
+import { ReactContextLink } from '@/site/Links'
 import { Link, Hero, PeopleWhoShare, Source } from '@abw/badger-website'
 import { Tabset } from '@abw/badger-react-ui'
 
@@ -88,6 +89,8 @@ access the same model data.
 
 ## Getting Started
 
+For people who just want to get on with it.
+
 <div className="grid-1 gap-4">
   <div className="link">
     The <Link to="/installation">Installation</Link> page shows how to add it
@@ -105,3 +108,55 @@ access the same model data.
   </div>
 </div>
 
+
+## Reference
+
+For people who like a little more detail.
+
+<div className="grid-1 gap-4">
+  <div className="link">
+    <Link to="/model">Model</Link>
+  </div>
+
+  <div className="link">
+    <Link to="/provider">Provider</Link>
+  </div>
+
+  <div className="link">
+    <Link to="/products">Consumer</Link>
+  </div>
+
+  <div className="link">
+    <Link to="/use">Use</Link>
+  </div>
+
+  <div className="link">
+    <Link to="/use">Children</Link>
+  </div>
+</div>
+
+## History
+
+This code is based on an earlier module of mine, <ReactContextLink/>.
+Migrating <ReactContextLink/> to Typescript proved to be a challenging task,
+partly due to some of the design decisions I made (or was forced to make) when
+I first wrote it in Javascript, many years ago.
+
+<ReactContextLink/> is still available, still works, and has now been
+re-written in Typescript. In particular, it supports both functional component
+and class based components. In contract, React Model only supports functional
+components.  This limitation allows it to take a simpler approach which
+ultimately leads to cleaner code (in my opinion).
+
+If you're starting a new project and happy to use functional components, then
+React Model is probably the best choice.  Otherwise, take a look at
+<ReactContextLink/> and see if that's more up your street.
+
+## Be Responsible For the Software You Use!
+
+This software is provided as Open Source and is free (in all senses of the
+word) to use.  It comes without warranty or guarantee of fitness for purpose.
+If you want to use it then that's up to you.  If you're not happy with it then
+you're entitled to a full refund of the purchase price.
+
+<PeopleWhoShare/>

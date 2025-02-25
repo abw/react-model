@@ -1,9 +1,31 @@
+import { Snippet } from '@abw/badger-website'
+
 # Children
 
-## TODO
+OK, I admit it.  I wasn't telling the whole truth when I said this implements
+an "MPCU" pattern.  There's a bit more to it than the `Model`, `Provider`,
+`Consumer` and `Use` hook.  There's also a `Children` component which gets
+returned in the object when you call the `Model` function.
 
-* `Children` component
+The purpose of the `Children` component is to allow you to embed functions
+directly into your React code.  My personal opinion is that this isn't usually
+a good idea.  But it can be useful for quick hacks, tests, or in other
+exceptional circumstances.
 
-* functions
+A function defined *immediately* inside the `Children` component (i.e. not
+nested inside any other element or component) will be called as a model
+consumer.  That is, it will be passed all the properties returned by your
+model function.  You can include any other React content inside the `Children`
+component and it will be rendered as usual.
 
-* must be immediate children
+<Snippet
+  file="children/child.tsx"
+  expand
+/>
+
+## Typescript Notes
+
+If you're using Typescript then the properties passed to your functions
+will be properly typed.
+
+What more could you ask for?  Other than a pony.

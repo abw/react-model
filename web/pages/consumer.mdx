@@ -1,9 +1,68 @@
+import { Snippet } from '@abw/badger-website'
+
 # Consumer
 
-## TODO
+If you wrap a component using the `Consumer` higher order component, then
+it will receive all the properties returned by your model function.
 
-* receiving properties
+Consider this model.
 
-* optional types
+<Snippet
+  file="consumer/model.js"
+  expand
+/>
 
-* inline wrapper vs wrap later
+A component wrapped by `Consumer` will receive the `count`, `setCount` and
+`className` properties.
+
+<Snippet
+  file="consumer/consumer.js"
+  expand
+/>
+
+## Typescript Notes
+
+If you're using Typescript then your consumer components will have their
+properties type checked according to the type of data returned by the
+model function.
+
+Here's the same model from earlier, but this time with types.
+
+<Snippet
+  file="consumer/model.ts"
+  expand
+/>
+
+A component wrapped by `Consumer` will receive the `count`, `setCount` and
+`className` properties and they'll all be properly typed.  If you misspell
+a property name, specify a property that isn't defined, or misuse a property
+according to its type then Typescript will tell you that you're being a
+numpty.
+
+<Snippet
+  file="consumer/consumer-errors.ts"
+  expand
+/>
+
+You don't need to define your component inside the call to `Consumer`.  If
+you prefer you can define it first and then wrap it later.  However, in this
+case, you will need to type the properties yourself.
+
+Consider this model where we define interfaces for the `CounterProviderProps`
+and `CounterRenderProps`.
+
+<Snippet
+  file="consumer/wrap-later-model.ts"
+  expand
+/>
+
+We can import the `Consumer` and `CounterRenderProps` type from the model
+and then define the `Count` component which has the properties typed using
+`CounterRenderProps`.  The default export from the module can then be the
+component wrapped using the `Consumer` higher order component.
+
+<Snippet
+  file="consumer/wrap-later-consumer.ts"
+  expand
+/>
+

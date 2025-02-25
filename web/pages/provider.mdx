@@ -1,7 +1,45 @@
+import { Snippet } from '@abw/badger-website'
+
 # Provider
 
-## TODO
+The generated `Provider` will forward all properties to your model function.
 
-* passing properties
+Consider this model which has a required `initialCount` property and optional
+`className`.
 
-* optional types
+<Snippet
+  file="provider/model.js"
+  expand
+/>
+
+If you're not using Typescript then you're not going to get any warnings
+if you forget to provide the required `initialCount` property, or if you
+mistype the optional `className` property.  It just works, for better or
+worse.  The model function will receive the properties that you provide.
+
+<Snippet
+  file="provider/provider.jsx"
+  expand
+/>
+
+## Typescript Notes
+
+If you're using Typescript then the `Provider` properties will be typed to
+match the properties of your model.  You'll get a Typescript error if you
+forget to define the required `initialCount` property, mistype the `className`
+property, or provide any other properties that it wasn't expecting.
+
+These are both fine:
+
+<Snippet
+  file="provider/provider-ok.tsx"
+  expand
+/>
+
+These are not.  Typescript will tell you that you've made a mistake so your
+boss or client doesn't have to.
+
+<Snippet
+  file="provider/provider-errors.tsx"
+  expand
+/>

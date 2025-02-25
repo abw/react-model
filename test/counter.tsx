@@ -18,7 +18,7 @@ const Counter = ({
   }
 }
 
-const { Provider, Consumer, Use: useCounter } = Model(Counter)
+const { Provider, Consumer, Children, Use: useCounter } = Model(Counter)
 
 const Count = Consumer(
   ({ count }) =>
@@ -77,6 +77,37 @@ it(
     expect(count).toHaveTextContent('9')
 
     await userEvent.click(eleven)
+    expect(count).toHaveTextContent('11')
+  }
+)
+
+it(
+  'children should receive props',
+  async () => {
+    render(
+      <Provider initialCount={10}>
+        <Children>
+          <div data-testid="hello">Hello World</div>
+          {
+            ({ count }) => <div data-testid="count">{count}</div>
+          }
+          {
+            ({ setCount }) =>
+              <button data-testid="inc" onClick={() => setCount( count => count + 1)}>
+                Inc
+              </button>
+          }
+        </Children>
+      </Provider>
+    )
+    const hello = screen.getByTestId('hello')
+    expect(hello).toHaveTextContent('Hello World')
+
+    const count = screen.getByTestId('count')
+    expect(count).toHaveTextContent('10')
+
+    const inc = screen.getByTestId('inc')
+    await userEvent.click(inc)
     expect(count).toHaveTextContent('11')
   }
 )
